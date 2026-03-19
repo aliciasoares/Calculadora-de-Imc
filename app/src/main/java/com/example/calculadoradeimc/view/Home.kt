@@ -33,6 +33,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.calculadoradeimc.datasource.Calculations
 import com.example.calculadoradeimc.ui.theme.Blue
 import com.example.calculadoradeimc.ui.theme.Red
 import com.example.calculadoradeimc.ui.theme.White
@@ -43,7 +44,7 @@ fun Home(){
 
     var height by remember { mutableStateOf("") }
     var weight by remember { mutableStateOf("") }
-    var resultMessage by remember { mutableStateOf("IMC: 24.1 \n Peso Normal") }
+    var resultMessage by remember { mutableStateOf("") }
     var textFieldError by remember { mutableStateOf(false) }
 
 
@@ -151,7 +152,10 @@ fun Home(){
 
             Button(
                 onClick = {
-
+                    Calculations.calculateIMC(height = height, weight = weight, response = {result, textFieldState ->
+                        resultMessage = result
+                        textFieldError = textFieldState
+                    })
                 },
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Blue
